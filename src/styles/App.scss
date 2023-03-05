@@ -1,0 +1,173 @@
+$breakpoints: (
+  xs: 512px,
+  sm: 768px,
+  md: 896px,
+  lg: 1152px,
+  xl: 1280px,
+);
+
+@mixin breakpoint($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    @media ( min-width: #{ map-get( $breakpoints, $breakpoint ) } ) {
+      @content;
+    }
+  } @else if
+    type_of($breakpoint) ==
+    number and
+    unit($breakpoint) ==
+    px or
+    unit($breakpoint) ==
+    em or
+    unit($breakpoint) ==
+    rem
+  {
+    @media (min-width: $breakpoint) {
+      @content;
+    }
+  }
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+#root {
+  @include breakpoint(lg) {
+      height: 100vh;
+      background: linear-gradient(35deg, red, purple);
+    }
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  @include breakpoint(lg) {
+    width: 80vw;
+    min-height: 80vh;
+    top: 50%;
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 25px;
+    overflow: hidden;
+  }
+
+  nav {
+    background-color: #b0d0d3;
+    ul {
+      list-style: none;
+      display: flex;
+
+      li {
+        flex-grow: 1;
+        text-align: center;
+
+        a {
+          color: white;
+          text-decoration: none;
+          text-transform: uppercase;
+          font-size: 28px;
+        }
+      }
+    }
+  }
+  section {
+    background-color: #f7af9d;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+
+    h1 {
+      color: white;
+      flex-grow: 1;
+      flex-basis: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .answersNextWrap {
+      background-color: #c08497;
+      flex-grow: 1;
+      flex-basis: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .next {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        padding: 20px;
+        border: none;
+        background-color: #f7e3af;
+        color: white;
+      }
+    }
+
+    .optionsWrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      * {
+        margin-top: 10px;
+      }
+
+      select {
+        appearance: none;
+        border: 0;
+        outline: 0;
+        width: 80%;
+        height: 3em;
+        padding: 0 4em 0 1em;
+        font-size: 20px;
+        background: url(https://upload.wikimedia.org/wikipedia/commons/9/9d/Caret_down_font_awesome_whitevariation.svg)
+            no-repeat right 0.8em center / 1.4em,
+          linear-gradient(
+            to left,
+            rgba(255, 255, 255, 0.3) 3em,
+            rgba(255, 255, 255, 0.2) 3em
+          );
+        color: white;
+        border-radius: 0.25em;
+        box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+
+        option {
+          color: inherit;
+          background-color: #320a28;
+        }
+
+        &:focus {
+          outline: none;
+        }
+
+        &::-ms-expand {
+          display: none;
+        }
+      }
+
+      label {
+        color: white;
+        font-size: 30px;
+      }
+    }
+
+    .statsWrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      * {
+        color: white;
+        font-size: 30px;
+        margin-top: 10px;
+      }
+    }
+  }
+}
